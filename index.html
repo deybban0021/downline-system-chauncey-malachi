@@ -12,8 +12,8 @@
     :root {
       --primary-color: #ffffff;
       --secondary-color: #1a73e8; /* Updated blue accent */
-      --accent-color: #1a73e8;    /* Updated blue accent */
-      --widget-bg: #0f0f1a;       /* Updated background blue */
+      --accent-color: #1a73e8;    /* Same blue accent */
+      --widget-bg: #0f0f1a;       /* Background blue */
       --item-bg: #1e1e1e;
       --body-bg: #0a0a0a;
       --card-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
@@ -44,7 +44,7 @@
     .downline-widget {
       background: var(--widget-bg);
       border-radius: var(--border-radius);
-      padding: 20px; /* Reduced padding for a more compressed look */
+      padding: 20px; /* Slightly reduced padding */
       max-width: 600px; /* Slightly smaller max-width */
       width: 100%;
       box-shadow: var(--card-shadow);
@@ -66,21 +66,20 @@
     }
     
     .dw-header {
-      position: relative;
-      margin-bottom: 25px;
       text-align: center;
+      margin-bottom: 25px;
     }
     
     .dw-header h2 {
       margin-bottom: 15px;
       font-size: 2rem;
       font-weight: 700;
-      background: linear-gradient(90deg, #1a73e8, #ff4081); /* Gradient text from blue to pink */
+      background: linear-gradient(90deg, #1a73e8, #ff4081); /* Gradient text */
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      position: relative;
       display: inline-block;
+      position: relative;
     }
     
     .dw-header h2::after {
@@ -109,9 +108,9 @@
       border-radius: var(--border-sm-radius);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
       position: relative;
       overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     
     .stat-card::before {
@@ -157,14 +156,6 @@
       width: 4px;
       height: 100%;
       background: linear-gradient(180deg, #1a73e8, #ff4081);
-    }
-    
-    .profile-section h3 {
-      margin-bottom: 15px;
-      color: var(--secondary-color);
-      font-size: 1.3rem;
-      position: relative;
-      display: inline-block;
     }
     
     .profile-info {
@@ -223,27 +214,29 @@
       margin-bottom: 20px;
     }
     
-    .section-header h3 {
-      margin-bottom: 0;
-    }
-    
-    /* Downline List – Compressed Layout */
+    /* Downline List */
     .downline-list {
-      display: grid;
-      gap: 10px; /* Reduced gap for more compact layout */
+      display: flex;
+      flex-direction: column;
+      gap: 10px; /* Slightly smaller gap */
     }
     
+    /*
+      IMPORTANT: We switch to a 3-column grid so
+      everything stays in a single row on ALL screens.
+    */
     .downline-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto; /* Avatar | Name & date | Sales */
+      align-items: center;
+      gap: 10px;
       background: var(--item-bg);
       border-radius: var(--border-sm-radius);
-      padding: 15px; /* Reduced padding */
+      padding: 15px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
       position: relative;
       overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     
     .downline-item:hover {
@@ -252,8 +245,9 @@
       background: var(--highlight);
     }
     
+    /* Smaller avatar for a single-line layout */
     .downline-avatar {
-      width: 40px; /* Smaller avatar for a compact view */
+      width: 40px;
       height: 40px;
       border-radius: 50%;
       background: linear-gradient(135deg, #2C3E50, #4CA1AF);
@@ -262,37 +256,35 @@
       justify-content: center;
       color: white;
       font-weight: bold;
-      margin-right: 10px;
       flex-shrink: 0;
     }
     
     .downline-details {
       display: flex;
-      flex-direction: column;
-      gap: 3px; /* Reduced gap */
-      flex-grow: 1;
+      flex-direction: row; /* Keep name & date side by side if space allows */
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      min-width: 0;
     }
     
     .downline-name {
       font-weight: 600;
-      font-size: 1rem; /* Slightly smaller font-size for compactness */
+      font-size: 1rem;
       color: var(--primary-color);
+      white-space: nowrap; /* Prevent text wrap if you prefer */
     }
     
     .downline-info {
-      display: flex;
-      gap: 15px;
       color: #aaa;
       font-size: 0.9rem;
-    }
-    
-    .downline-info span {
       display: flex;
       align-items: center;
+      gap: 5px;
+      white-space: nowrap;
     }
     
     .downline-info i {
-      margin-right: 5px;
       font-size: 0.8rem;
     }
     
@@ -305,6 +297,7 @@
       display: flex;
       align-items: center;
       gap: 5px;
+      white-space: nowrap;
     }
     
     /* Footer */
@@ -343,40 +336,25 @@
     .downline-item:nth-child(4) { animation-delay: 0.7s; }
     .downline-item:nth-child(5) { animation-delay: 0.8s; }
     
-    /* Responsive Adjustments */
+    /* 
+      Remove or override the previous media query
+      that set .downline-item to flex-direction: column;
+      so it always stays in a single row.
+    */
+    
     @media (max-width: 768px) {
       .downline-widget {
         padding: 15px;
       }
       
-      .dw-stats {
-        grid-template-columns: 1fr;
-      }
-      
-      .profile-info {
-        flex-direction: column;
-        text-align: center;
-      }
-      
+      /* Keep the same grid layout so items stay in one row */
       .downline-item {
-        flex-direction: column;
-        align-items: flex-start;
+        grid-template-columns: auto 1fr auto;
         padding: 12px;
       }
       
-      .downline-avatar {
-        margin-right: 0;
-        margin-bottom: 5px;
-      }
-      
-      .downline-info {
-        flex-direction: column;
-        gap: 3px;
-      }
-      
-      .downline-sales {
-        align-self: flex-start;
-        margin-top: 5px;
+      .downline-details {
+        gap: 0.5rem;
       }
     }
   </style>
@@ -423,10 +401,10 @@
       <div class="downline-item">
         <div class="downline-avatar">A1</div>
         <div class="downline-details">
-          <div class="downline-name">Agent One</div>
-          <div class="downline-info">
-            <span><i class="fas fa-calendar-alt"></i> Joined: 01/01/2025</span>
-          </div>
+          <span class="downline-name">Agent One</span>
+          <span class="downline-info">
+            <i class="fas fa-calendar-alt"></i>Joined: 01/01/2025
+          </span>
         </div>
         <div class="downline-sales">
           <i class="fas fa-chart-line"></i>
@@ -437,10 +415,10 @@
       <div class="downline-item">
         <div class="downline-avatar">A2</div>
         <div class="downline-details">
-          <div class="downline-name">Agent Two</div>
-          <div class="downline-info">
-            <span><i class="fas fa-calendar-alt"></i> Joined: 01/02/2025</span>
-          </div>
+          <span class="downline-name">Agent Two</span>
+          <span class="downline-info">
+            <i class="fas fa-calendar-alt"></i>Joined: 01/02/2025
+          </span>
         </div>
         <div class="downline-sales">
           <i class="fas fa-chart-line"></i>
@@ -451,10 +429,10 @@
       <div class="downline-item">
         <div class="downline-avatar">A3</div>
         <div class="downline-details">
-          <div class="downline-name">Agent Three</div>
-          <div class="downline-info">
-            <span><i class="fas fa-calendar-alt"></i> Joined: 01/03/2025</span>
-          </div>
+          <span class="downline-name">Agent Three</span>
+          <span class="downline-info">
+            <i class="fas fa-calendar-alt"></i>Joined: 01/03/2025
+          </span>
         </div>
         <div class="downline-sales">
           <i class="fas fa-chart-line"></i>
@@ -465,10 +443,10 @@
       <div class="downline-item">
         <div class="downline-avatar">A4</div>
         <div class="downline-details">
-          <div class="downline-name">Agent Four</div>
-          <div class="downline-info">
-            <span><i class="fas fa-calendar-alt"></i> Joined: 01/04/2025</span>
-          </div>
+          <span class="downline-name">Agent Four</span>
+          <span class="downline-info">
+            <i class="fas fa-calendar-alt"></i>Joined: 01/04/2025
+          </span>
         </div>
         <div class="downline-sales">
           <i class="fas fa-chart-line"></i>
@@ -479,10 +457,10 @@
       <div class="downline-item">
         <div class="downline-avatar">A5</div>
         <div class="downline-details">
-          <div class="downline-name">Agent Five</div>
-          <div class="downline-info">
-            <span><i class="fas fa-calendar-alt"></i> Joined: 01/05/2025</span>
-          </div>
+          <span class="downline-name">Agent Five</span>
+          <span class="downline-info">
+            <i class="fas fa-calendar-alt"></i>Joined: 01/05/2025
+          </span>
         </div>
         <div class="downline-sales">
           <i class="fas fa-chart-line"></i>
